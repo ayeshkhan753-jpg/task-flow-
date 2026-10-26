@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111827" />
+  <title>TaskFlow — Manage your day</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">✓</span><span>taskflow<span class="brand-dot">.</span></span></a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <button class="nav-item active" id="navAll"><span>▦</span> All tasks <span class="nav-count" id="navTotal">0</span></button>
+      <button class="nav-item" data-status="pending"><span>◷</span> Pending</button>
+      <button class="nav-item" data-status="in_progress"><span>↗</span> In progress</button>
+      <button class="nav-item" data-status="completed"><span>✓</span> Completed</button>
+      <div class="sidebar-bottom">
+        <div class="user-card"><div class="avatar" id="avatar">U</div><div class="user-meta"><strong id="sidebarName">Your account</strong><small id="sidebarEmail">Sign in to continue</small></div></div>
+        <button class="nav-item logout hidden" id="logoutBtn"><span>↪</span> Log out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><div><div class="eyebrow">YOUR WORKSPACE</div><h1 id="greeting">Make room for great work.</h1><p class="subheading">A little progress each day adds up.</p></div><div class="top-actions"><span class="secure-badge">● Your tasks, private</span><button class="primary-btn" id="addTaskTop">＋ New task</button></div></header>
+      <section id="authPanel" class="auth-panel">
+        <div class="auth-copy"><span class="pill">GET STARTED</span><h2>Bring your tasks<br/>into focus.</h2><p>Create an account or sign in to organize your work in one calm, clear space.</p><div class="auth-points"><span>✓ Your own private task list</span><span>✓ Track progress at a glance</span><span>✓ Simple, secure sign in</span></div></div>
+        <div class="auth-box"><div class="auth-tabs"><button class="tab active" data-auth="login">Sign in</button><button class="tab" data-auth="register">Create account</button></div>
+          <form id="authForm"><label id="nameWrap" class="hidden">Full name<input id="name" autocomplete="name" minlength="2" maxlength="100" /></label><label>Email address<input id="email" type="email" required autocomplete="email" placeholder="you@example.com" /></label><label>Password<input id="password" type="password" required minlength="8" autocomplete="current-password" placeholder="At least 8 characters" /></label><button class="primary-btn full" id="authSubmit" type="submit">Sign in <span>→</span></button><p class="form-message" id="authMessage" role="status"></p></form>
+        </div>
+      </section>
+
+      <section id="dashboard" class="hidden">
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total tasks</span><span class="stat-icon purple">▦</span></div><strong id="statTotal">0</strong><small>Across your workspace</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Pending</span><span class="stat-icon amber">◷</span></div><strong id="statPending">0</strong><small>Ready when you are</small></article>
+          <article class="stat-card"><div class="stat-top"><span>In progress</span><span class="stat-icon blue">↗</span></div><strong id="statProgress">0</strong><small>Currently underway</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Completed</span><span class="stat-icon green">✓</span></div><strong id="statCompleted">0</strong><small>Look what you achieved</small></article>
+        </div>
+        <div class="tasks-heading"><div><h2>Your tasks</h2><p>Keep your next step clear.</p></div><div class="filters"><input id="searchInput" type="search" placeholder="⌕ Search tasks..." aria-label="Search tasks"/><select id="priorityFilter" aria-label="Filter by priority"><option value="">All priorities</option><option value="high">High priority</option><option value="medium">Medium priority</option><option value="low">Low priority</option></select><select id="statusFilter" aria-label="Filter by status"><option value="">All statuses</option><option value="pending">Pending</option><option value="in_progress">In progress</option><option value="completed">Completed</option></select></div></div>
+        <div id="taskList" class="task-list"></div>
+        <div class="pagination"><span id="pageInfo">Page 1</span><div><button id="prevPage" class="secondary-btn">← Previous</button><button id="nextPage" class="secondary-btn">Next →</button></div></div>
+      </section>
+      <footer class="footer"><span>TaskFlow <span class="brand-dot">.</span></span><span>Small steps. Meaningful progress.</span><span><a href="/docs" target="_blank">API documentation ↗</a></span></footer>
+    </main>
+  </div>
+
+  <dialog id="taskDialog" class="task-dialog"><form id="taskForm" method="dialog"><div class="dialog-head"><div><span class="pill">TASK DETAILS</span><h2 id="dialogTitle">Create a task</h2></div><button type="button" class="close-btn" id="closeDialog" aria-label="Close">×</button></div><input type="hidden" id="taskId"/><label>Task title<input id="taskTitle" required maxlength="200" placeholder="What needs to get done?"/></label><label>Description <span class="optional">Optional</span><textarea id="taskDescription" rows="4" maxlength="5000" placeholder="Add a few details..."></textarea></label><div class="field-row"><label>Status<select id="taskStatus"><option value="pending">Pending</option><option value="in_progress">In progress</option><option value="completed">Completed</option></select></label><label>Priority<select id="taskPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></label></div><p id="taskMessage" class="form-message" role="status"></p><div class="dialog-actions"><button type="button" class="secondary-btn" id="cancelDialog">Cancel</button><button class="primary-btn" type="submit" id="saveTaskBtn">Save task <span>→</span></button></div></form></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
